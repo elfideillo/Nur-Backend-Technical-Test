@@ -1,5 +1,6 @@
 ### Login_User(): Obtener Token de Acceso
 POST http://62.146.228.32:4000/api/v1/users/login
+Content-Type: application/json
 
 {
   "email": "admin@spsgroup.com.br",
