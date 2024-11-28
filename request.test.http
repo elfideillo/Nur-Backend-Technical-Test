@@ -1,0 +1,58 @@
+### Login_User(): Obtener Token de Acceso
+POST http://62.146.228.32:4000/api/v1/users/login
+
+{
+  "email": "admin@spsgroup.com.br",
+  "password": "1234"
+}
+
+
+
+### Get_All_Users(): Obtener todos los usuarios
+GET http://62.146.228.32:4000/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzcHNncm91cC5jb20uYnIiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3MzI2NzU1MDMsImV4cCI6MTczMjY3OTEwM30.128SvSvL63tXh4vbNRXJ3GpOikJrQ6vrlRzURAgBpaM
+
+
+### Get_User(): Obtener los datos de 1 usuario
+GET http://62.146.228.32:4000/api/v1/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzcHNncm91cC5jb20uYnIiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3MzI2NzU1MDMsImV4cCI6MTczMjY3OTEwM30.128SvSvL63tXh4vbNRXJ3GpOikJrQ6vrlRzURAgBpaM
+
+
+### Registrar un nuevo usuario
+POST http://62.146.228.32:4000/api/v1/users/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzcHNncm91cC5jb20uYnIiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3MzI2NzU1MDMsImV4cCI6MTczMjY3OTEwM30.128SvSvL63tXh4vbNRXJ3GpOikJrQ6vrlRzURAgBpaM
+
+{
+  "name": "user_6",
+  "email": "practicante_3@spsgroup.com.br",
+  "type": "user",
+  "password": "2244"
+}
+
+### Actualizar Valores de 1 Usuario
+PUT http://62.146.228.32:4000/api/v1/users/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzcHNncm91cC5jb20uYnIiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3MzI2NzU1MDMsImV4cCI6MTczMjY3OTEwM30.128SvSvL63tXh4vbNRXJ3GpOikJrQ6vrlRzURAgBpaM
+
+{
+  "name": "Updated Name",
+  "email": "reupdated@update.com"
+}
+
+
+
+### Actualizar Valores de 1 Usuario
+DELETE http://62.146.228.32:4000/api/v1/users/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBzcHNncm91cC5jb20uYnIiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3MzI2NzU1MDMsImV4cCI6MTczMjY3OTEwM30.128SvSvL63tXh4vbNRXJ3GpOikJrQ6vrlRzURAgBpaM
+
+
+
+
+
+
+
+
+
+

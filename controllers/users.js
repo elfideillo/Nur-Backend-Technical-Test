@@ -1,6 +1,5 @@
 import prisma from '../models/database.js'
 import { Generate_Token } from '../utils/jwt.js'
-
 import bcrypt from 'bcryptjs'
 
 
@@ -31,29 +30,39 @@ export const Create_User = async (req, res) => {
 
 // Login_User(): Función para autenticar un usuario
 export const Login_User = async (req, res) => {
-    
-    const { email, password } = req.body;
+        try {
+            const { email, password } = req.body;
 
-    try {
-        
-        const user = await prisma.user.findUnique({ where: { email } });
-        
-        if (!user) return res.status(404).json({ error: '⛔ Usuario No Encontrado' });
+            // Verifica que los datos requeridos están presentes
+            if (!email || !password) {
+                return res.status(400).json({ error: "Email y contraseña son requeridos." });
+            }
 
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) return res.status(401).json({ error: '⛔️ Credenciales Inválidas' });
+            // Busca el usuario en la base de datos
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: email,
+                },
+            });
 
-        const token = Generate_Token(user);
-        
-        res.status(200).json({ token });
-        
-    } catch (error) {
-        
-        res.status(500).json({ error: error.message });
-        
-    }
-    
-};
+            // Si no se encuentra el usuario, devuelve un error
+            if (!user) {
+                return res.status(404).json({ error: "Usuario no encontrado." });
+            }
+
+            // Verifica la contraseña (asegúrate de usar bcrypt si las contraseñas están encriptadas)
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ error: "Contraseña incorrecta." });
+            }
+
+            // Si todo es válido, devuelve un token o datos del usuario
+            return res.status(200).json({ message: "Login exitoso", user });
+        } catch (error) {
+            console.error("Error en login:", error);
+            return res.status(500).json({ error: "Error interno del servidor." });
+        }
+    };
 
 
 
