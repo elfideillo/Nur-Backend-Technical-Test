@@ -6,6 +6,15 @@ const prisma = new PrismaClient();
 const seedDatabase = async () => {
     console.log('Seeding database...');
 
+    const adminUser = await prisma.user.create({
+        data: {
+            name: "admin",
+            email: "admin@spsgroup.com.br",
+            type: "admin",
+            password: "$2a$10$5mFvL9wj2zdQmY5jgPWE/.8qtjQi9S4x61Nal4kzuv/MZwLf5vkqy", // En producción, usa un hash para la contraseña
+        },
+    });
+
     const users = Array.from({ length: 20 }, () => ({
         name: faker.person.fullName(), // Reemplazado faker.name.fullName()
         email: faker.internet.email(),
