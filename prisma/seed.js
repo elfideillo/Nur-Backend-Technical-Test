@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -7,24 +8,29 @@ const seedDatabase = async () => {
     console.log('Iniciando el proceso de seed...');
 
     try {
+        // Encriptar la contraseña del usuario admin
+        const hashedAdminPassword = await bcrypt.hash('1234', 10);
+
         // Crear el usuario admin
         const adminUser = await prisma.user.create({
             data: {
                 name: "admin",
                 email: "admin@spsgroup.com.br",
                 type: "admin",
-                password: "$2a$10$5mFvL9wj2zdQmY5jgPWE/.8qtjQi9S4x61Nal4kzuv/MZwLf5vkqy", // Contraseña hash
+                password: hashedAdminPassword, // Contraseña encriptada
             },
         });
         console.log('Usuario admin creado:', adminUser);
 
         // Crear usuarios adicionales
-        const users = Array.from({ length: 20 }, () => ({
-            name: faker.person.fullName(), // Generar nombre completo
-            email: faker.internet.email(),
-            type: faker.helpers.arrayElement(['admin', 'user', 'guest']),
-            password: faker.internet.password(), // En producción, reemplazar con un hash
-        }));
+        const users = await Promise.all(
+            Array.from({ length: 20 }).map(async () => ({
+                name: faker.person.fullName(), // Generar nombre completo
+                email: faker.internet.email(),
+                type: faker.helpers.arrayElement(['admin', 'user', 'guest']),
+                password: await bcrypt.hash(faker.internet.password(), 10), // Encriptar contraseñas generadas
+            }))
+        );
 
         await prisma.user.createMany({
             data: users,
